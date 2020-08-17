@@ -6,9 +6,19 @@
 - macro: unauthorized_processes
   condition: proc.name in (unauthorized_applications)
 
+- macro: unautho  
+  condition: proc.pname in (unauthorized_applications)
+
 - rule: Unauthorized application is running
   desc: Detect that an unauthorized application is running
   condition: unauthorized_processes and (evt.type = execve)
   output: An unauthorized application is running (command=%proc.cmdline port=%fd.rport ip=%fd.rip container2=%container.id container=%container.info image=%container.image.repository)
+  priority: CRITICAL
+  tags: [proxy, okteto_cloud, crytoconcurrency, mining]
+
+- rule: Unauthorized application 
+  desc: Detect that an unauthorized application is running
+  condition: unauthorized_processes and 
+  output: unauthorized (command=%proc.cmdline port=%fd.rport ip=%fd.rip container2=%container.id container=%container.info image=%container.image.repository)
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
