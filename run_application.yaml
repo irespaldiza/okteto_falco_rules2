@@ -1,4 +1,7 @@
 - list: unauthorized_applications
+  items: [
+    "v2ray"
+  ]
 
 - macro: unauthorized_processes
   condition: proc.name in unauthorized_applications
