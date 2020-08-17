@@ -4,7 +4,7 @@
   ]
 
 - macro: unauthorized_processes
-  condition: proc.name in (unauthorized_applications)
+  condition: (proc.name or cmdline) in (unauthorized_applications)
 
 - macro: unautho  
   condition: proc.pname in (unauthorized_applications)
