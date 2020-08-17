@@ -7,7 +7,7 @@
   condition: proc.name  in (unauthorized_applications)
 
 - macro: unauthorized_processes_cmdline
-  condition: proc.cmdline (unauthorized_applications)
+  condition: proc.cmdline in (unauthorized_applications)
 
 # - macro: unautho  
 #   condition: proc.pname in (unauthorized_applications)
