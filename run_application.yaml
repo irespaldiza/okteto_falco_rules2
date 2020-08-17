@@ -1,6 +1,6 @@
 - list: unauthorized_applications
   items: [
-    "v2ray"
+    '"v2ray"'
   ]
 
 - macro: unauthorized_processes
