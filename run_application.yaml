@@ -3,8 +3,14 @@
     '"v2ray"'
   ]
 
+- list: process
+  items: [
+    "proc.cmdline"
+    "proc.name"
+  ] 
+
 - macro: unauthorized_processes
-  condition: proc.cmdline in (unauthorized_applications)
+  condition: process in (unauthorized_applications)
 
 
 - rule: Unauthorized application is running
