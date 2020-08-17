@@ -16,4 +16,3 @@
   output: An unauthorized application is running (command=%proc.cmdline port=%fd.rport ip=%fd.rip container2=%container.id container=%container.info image=%container.image.repository)
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
-
