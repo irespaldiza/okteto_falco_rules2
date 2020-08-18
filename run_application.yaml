@@ -17,3 +17,12 @@
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
 
+- macro: unauthorized_processes_exe
+  condition: proc.exe in (unauthorized_applications)
+
+- rule: Unauthorized application is running
+  desc: Detect that an unauthorized application is running
+  condition: unauthorized_processes_exe and (evt.type = execve)
+  output: s running (command=%proc.cmdline port=%fd.rport ip=%fd.rip container2=%container.id container=%container.info image=%container.image.repository test=%k8s.pod.name test2=%k8s.ns.name)
+  priority: CRITICAL
+  tags: [proxy, okteto_cloud, crytoconcurrency, mining]
