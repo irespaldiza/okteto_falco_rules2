@@ -20,14 +20,14 @@
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
 
-- list: unauthorized_protocols
-  items: [
-    '"vmess"',
-    '"freedom"'
-  ]
+# - list: unauthorized_protocols
+#   items: [
+#     '"vmess"',
+#     '"freedom"'
+#   ]
 
 - macro: unauthorized_processes_protocols
-  condition: proc.cmdline contains (unauthorized_protocols)
+  condition: proc.cmdline contains "freedom"
 
 - rule: Unag
   desc: Det
