@@ -4,7 +4,7 @@
   ]
 
 - macro: spawned_process
-  condition: evt.type = execve and container.id != host
+  condition: evt.type = execve 
 
 - macro: unauthorized_processes_name
   condition: proc.name in (unauthorized_applications)
@@ -15,7 +15,7 @@
 
 - rule: Unauthorized application is running
   desc: Detect that an unauthorized application is running
-  condition: spawned_process and (unauthorized_processes_name or unauthorized_processes_pname) 
+  condition: spawned_process and container.id != host and (unauthorized_processes_name or unauthorized_processes_pname) 
   output: An unauthorized application is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
