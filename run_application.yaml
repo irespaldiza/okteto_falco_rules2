@@ -1,6 +1,6 @@
 - list: unauthorized_applications
   items: [
-    '"v2ray"'
+    '"vmess"'
   ]
 
 - macro: unauthorized_processes_name
@@ -16,3 +16,4 @@
   output: An unauthorized application is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
+
