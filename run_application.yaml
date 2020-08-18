@@ -15,7 +15,7 @@
 
 - rule: Unauthorized application is running
   desc: Detect that an unauthorized application is running
-  condition: container and (unauthorized_processes_name or unauthorized_processes_pname) and (evt.type = execve)
+  condition: container.id != host and (unauthorized_processes_name or unauthorized_processes_pname) and (evt.type = execve)
   output: An unauthorized application is running (command=%proc.cmdline  container2=%container.name container=%container.info image=%container.image.repository)
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
