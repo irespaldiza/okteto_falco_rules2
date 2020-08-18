@@ -4,7 +4,7 @@
   ]
 
 - macro: spawned_process
-  condition: evt.type = execve and evt.dir=<
+  condition: evt.type = execve and evt.dir=< and container.id != host
 
 - macro: unauthorized_processes_name
   condition: proc.name in (unauthorized_applications)
@@ -15,23 +15,7 @@
 
 - rule: Unauthorized application is running
   desc: Detect that an unauthorized application is running
-  condition: spawned_process and container.id != host and (unauthorized_processes_name or unauthorized_processes_pname) 
+  condition: spawned_process  and (unauthorized_processes_name or unauthorized_processes_pname) 
   output: An unauthorized application is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
-  priority: CRITICAL
-  tags: [proxy, okteto_cloud, crytoconcurrency, mining]
-
-# - list: unauthorized_protocols
-#   items: [
-#     '"vmess"',
-#     '"freedom"'
-#   ]
-
-- macro: unauthorized_processes_protocols
-  condition: proc.cmdline contains "freedom"
-
-- rule: Unag
-  desc: Det
-  condition: evt.type in (execve, open, openat, creat) and unauthorized_processes_protocols
-  output: An unauthorized protocol is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
