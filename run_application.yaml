@@ -31,7 +31,7 @@
 
 - rule: Unag
   desc: Det
-  condition: spawned_process and unauthorized_processes_protocols
+  condition: evt.type in (execve, open, openat, creat) and unauthorized_processes_protocols
   output: An unauthorized protocol is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
