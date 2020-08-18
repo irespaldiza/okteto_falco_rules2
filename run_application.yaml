@@ -4,7 +4,7 @@
   ]
 
 - macro: spawned_process
-  condition: evt.type = execve and evt.dir=< and container.id != host
+  condition: evt.type = execve and container.id != host
 
 - macro: unauthorized_processes_name
   condition: proc.name in (unauthorized_applications)
