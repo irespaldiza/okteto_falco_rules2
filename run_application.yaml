@@ -27,7 +27,7 @@
 #   ]
 
 - macro: unauthorized_processes_protocols
-  condition: proc.cmdline contains "freedom"
+  condition: proc.pname contains "freedom"
 
 - rule: Unag
   desc: Det
