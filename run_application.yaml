@@ -1,7 +1,10 @@
 - list: unauthorized_applications
   items: [
-    '"vmess"'
+    '"v2ray"'
   ]
+
+- macro: spawned_process
+  condition: evt.type = execve and evt.dir=<
 
 - macro: unauthorized_processes_name
   condition: proc.name in (unauthorized_applications)
@@ -17,3 +20,18 @@
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
 
+- list: unauthorized_protocols
+  items: [
+    '"vmess"',
+    '"freedom"'
+  ]
+
+- macro: unauthorized_processes_protocols
+  condition: proc.cmdline contains (unauthorized_protocols)
+
+- rule: Unag
+  desc: Det
+  condition: spawned_process and unauthorized_processes_protocols
+  output: An unauthorized protocol is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
+  priority: CRITICAL
+  tags: [proxy, okteto_cloud, crytoconcurrency, mining]
