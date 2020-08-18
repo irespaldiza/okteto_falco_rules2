@@ -3,6 +3,9 @@
     '"v2ray"'
   ]
 
+- macro: container
+  condition: container.id != host
+
 - macro: unauthorized_processes_name
   condition: proc.name in (unauthorized_applications)
 
@@ -12,17 +15,7 @@
 
 - rule: Unauthorized application is running
   desc: Detect that an unauthorized application is running
-  condition: (unauthorized_processes_name or unauthorized_processes_pname) and (evt.type = execve)
-  output: An unauthorized application is running (command=%proc.cmdline port=%fd.rport ip=%fd.rip container2=%container.id container=%container.info image=%container.image.repository test=%k8s.pod.name test2=%k8s.ns.name)
-  priority: CRITICAL
-  tags: [proxy, okteto_cloud, crytoconcurrency, mining]
-
-- macro: unauthorized_processes_exe
-  condition: proc.exe in (unauthorized_applications)
-
-- rule: Unauthorized application is runningadasdasdasdasd
-  desc: Detect that an unauthorized application is running
-  condition: unauthorized_processes_exe and (evt.type = execve)
-  output: running (command=%proc.cmdline port=%fd.rport ip=%fd.rip container2=%container.id container=%container.info image=%container.image.repository test=%k8s.pod.name test2=%k8s.ns.name)
+  condition: container and (unauthorized_processes_name or unauthorized_processes_pname) and (evt.type = execve)
+  output: An unauthorized application is running (command=%proc.cmdline  container2=%container.name container=%container.info image=%container.image.repository test=%k8s.pod.name test2=%k8s.ns.info)
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
