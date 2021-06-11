@@ -1,21 +1,32 @@
-- list: unauthorized_applications
-  items: [
-    '"v2ray"'
-  ]
 
 - macro: spawned_process
-  condition: evt.type = execve 
+  condition: evt.type = execve
 
 - macro: unauthorized_processes_name
   condition: proc.name in (unauthorized_applications)
-
 
 - macro: unauthorized_processes_pname
   condition: proc.pname in (unauthorized_applications)
 
 - rule: Unauthorized application is running
   desc: Detect that an unauthorized application is running
-  condition: spawned_process and container.id != host and (unauthorized_processes_name or unauthorized_processes_pname) 
+  condition: spawned_process and (unauthorized_processes_name or unauthorized_processes_pname) 
   output: An unauthorized application is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
+
+- macro: uconections
+  condition: fd.net (unautoriced_ips)
+
+- rule: Unauthorized connection to node or metadata API
+  desc: Detect an unauthorized connection to a node port or metadata API
+  condition:
+  output: An unauthorized application is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
+  priority:  CRITICAL
+  tags: [network, conections, nodepool, metadata]
+
+- list: unautoriced_ips
+  items: [
+  '"34.89.30.146"',
+  '"169.254.169.254"'
+  ]
