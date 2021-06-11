@@ -15,12 +15,12 @@
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
 
-- macro: uconections
+- macro: uconnections
   condition: fd.net (unautoriced_ips)
 
 - rule: Unauthorized connection to node or metadata API
   desc: Detect an unauthorized connection to a node port or metadata API
-  condition:
+  condition: uconnections
   output: An unauthorized application is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
   priority:  CRITICAL
   tags: [network, conections, nodepool, metadata]
