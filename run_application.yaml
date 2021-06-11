@@ -20,7 +20,7 @@
 
 - rule: Unauthorized connection to node or metadata API
   desc: Detect an unauthorized connection to a node port or metadata API
-  condition: uconnections
+  condition: evt.type in (sendto, sendmsg) and (uconnections)
   output: An unauthorized application is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
   priority:  CRITICAL
   tags: [network, conections, nodepool, metadata]
