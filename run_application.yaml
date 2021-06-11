@@ -16,17 +16,17 @@
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
 
 - macro: uconnections
-  condition: fd.sip in (unautoriced_ips)
+  condition: fd.snet in (unautoriced_ips)
 
 - rule: Unauthorized connection to node or metadata API
   desc: Detect an unauthorized connection to a node port or metadata API
-  condition: evt.type in (sendto, sendmsg) and (uconnections)
+  condition: evt.type in (sendto, sendmsg) and (uconnections) and k8s.ns.name != (kube-system)
   output: An unauthorized application is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
   priority:  CRITICAL
   tags: [network, conections, nodepool, metadata]
 
 - list: unautoriced_ips
   items: [
-  '"34.89.30.146"',
-  '"169.254.169.254"'
+  '"10.154.0.23/16"',
+  '"169.254.169.254/32"'
   ]
