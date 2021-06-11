@@ -16,7 +16,7 @@
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
 
 - macro: uconnections
-  condition: fd.net (unautoriced_ips)
+  condition: fd.net in (unautoriced_ips)
 
 - rule: Unauthorized connection to node or metadata API
   desc: Detect an unauthorized connection to a node port or metadata API
