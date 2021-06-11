@@ -15,17 +15,17 @@
   priority: CRITICAL
   tags: [proxy, okteto_cloud, crytoconcurrency, mining]
 
-- macro: uconnections
-  condition: fd.snet in (unautoriced_ips)
+- macro: sensitive_ips_connection
+  condition: fd.snet in (sensitive_ips)
 
 - rule: Unauthorized connection to node or metadata API
   desc: Detect an unauthorized connection to a node port or metadata API
-  condition: evt.type in (sendto, sendmsg) and (uconnections) and not (user_known_metadata_access)
+  condition: evt.type in (sendto, sendmsg) and (sensitive_ips_connection) and not (user_known_metadata_access)
   output: An unauthorized application is running (command=%proc.cmdline container=%container.info image=%container.image.repository)
   priority:  CRITICAL
   tags: [network, conections, nodepool, metadata]
 
-- list: unautoriced_ips
+- list: sensitive_ips
   items: [
   '"10.154.0.0/16"',
   '"169.254.169.254/32"'
